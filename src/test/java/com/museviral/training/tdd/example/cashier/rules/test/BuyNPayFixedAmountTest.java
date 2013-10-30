@@ -3,7 +3,8 @@
  */
 package com.museviral.training.tdd.example.cashier.rules.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +15,15 @@ import org.junit.Test;
 
 import com.museviral.training.tdd.example.cashier.Item;
 import com.museviral.training.tdd.example.cashier.RuleResult;
-import com.museviral.training.tdd.example.cashier.rules.BuyNGetMFree;
+import com.museviral.training.tdd.example.cashier.rules.BuyNPayFixedAmount;
 
 /**
  * 
  * 
  * @author Cyril
- * 
+ * @since 0.1.0
  */
-public class BuyNGetMFreeTest {
+public class BuyNPayFixedAmountTest {
 
 	/**
 	 * @throws java.lang.Exception
@@ -39,9 +40,9 @@ public class BuyNGetMFreeTest {
 	}
 
 	@Test
-	public void testNoItem() {
+	public void testBuyNothing() {
 
-		BuyNGetMFree rule = new BuyNGetMFree("apple", 2, 1);
+		BuyNPayFixedAmount rule = new BuyNPayFixedAmount(2, "apple", 9);
 
 		List<Item> bucket = new ArrayList<Item>();
 		RuleResult ruleResult = rule.process(bucket);
@@ -53,9 +54,9 @@ public class BuyNGetMFreeTest {
 	}
 
 	@Test
-	public void testOneItem() {
+	public void testBuyOneApple() {
 
-		BuyNGetMFree rule = new BuyNGetMFree("apple", 2, 1);
+		BuyNPayFixedAmount rule = new BuyNPayFixedAmount(2, "apple", 1);
 
 		List<Item> bucket = new ArrayList<Item>();
 		bucket.add(new Item("apple", 5));
@@ -69,13 +70,30 @@ public class BuyNGetMFreeTest {
 	}
 
 	@Test
-	public void testTwoItem() {
+	public void testBuyTwoApple() {
 
-		BuyNGetMFree rule = new BuyNGetMFree("apple", 2, 1);
+		BuyNPayFixedAmount rule = new BuyNPayFixedAmount(2, "apple", 1.1);
 
 		List<Item> bucket = new ArrayList<Item>();
 		bucket.add(new Item("apple", 5));
 		bucket.add(new Item("apple", 5));
+
+		RuleResult ruleResult = rule.process(bucket);
+
+		assertNotNull(ruleResult);
+		assertEquals(1.1, ruleResult.getAmount(), 0);
+		assertEquals(2, ruleResult.getDiscountedItems().size());
+
+	}
+
+	@Test
+	public void testBuyTwoIrrelevantItems() {
+
+		BuyNPayFixedAmount rule = new BuyNPayFixedAmount(2, "apple", 1.1);
+
+		List<Item> bucket = new ArrayList<Item>();
+		bucket.add(new Item("orange", 5));
+		bucket.add(new Item("orange", 5));
 
 		RuleResult ruleResult = rule.process(bucket);
 
@@ -86,9 +104,9 @@ public class BuyNGetMFreeTest {
 	}
 
 	@Test
-	public void testOneSetOfItemsMatched() {
+	public void testBuyThreeItems() {
 
-		BuyNGetMFree rule = new BuyNGetMFree("apple", 2, 1);
+		BuyNPayFixedAmount rule = new BuyNPayFixedAmount(2, "apple", 1.1);
 
 		List<Item> bucket = new ArrayList<Item>();
 		bucket.add(new Item("apple", 5));
@@ -98,19 +116,15 @@ public class BuyNGetMFreeTest {
 		RuleResult ruleResult = rule.process(bucket);
 
 		assertNotNull(ruleResult);
-		assertEquals(10, ruleResult.getAmount(), 0);
-		assertEquals(3, ruleResult.getDiscountedItems().size());
-		for (Item discountedItem : ruleResult.getDiscountedItems()) {
-			assertEquals("apple", discountedItem.getItemCode());
-			assertEquals(5, discountedItem.getPrice(), 0);
-		}
+		assertEquals(1.1, ruleResult.getAmount(), 0);
+		assertEquals(2, ruleResult.getDiscountedItems().size());
 
 	}
 
 	@Test
-	public void testOneSetOfItemsMatchedWithRemaining() {
+	public void testBuyFourItems() {
 
-		BuyNGetMFree rule = new BuyNGetMFree("apple", 2, 1);
+		BuyNPayFixedAmount rule = new BuyNPayFixedAmount(2, "apple", 1.1);
 
 		List<Item> bucket = new ArrayList<Item>();
 		bucket.add(new Item("apple", 5));
@@ -121,37 +135,9 @@ public class BuyNGetMFreeTest {
 		RuleResult ruleResult = rule.process(bucket);
 
 		assertNotNull(ruleResult);
-		assertEquals(10, ruleResult.getAmount(), 0);
-		assertEquals(3, ruleResult.getDiscountedItems().size());
-		for (Item discountedItem : ruleResult.getDiscountedItems()) {
-			assertEquals("apple", discountedItem.getItemCode());
-			assertEquals(5, discountedItem.getPrice(), 0);
-		}
-
-	}	
-	
-	@Test
-	public void testTwoSetOfItemsMatched() {
-
-		BuyNGetMFree rule = new BuyNGetMFree("apple", 2, 1);
-
-		List<Item> bucket = new ArrayList<Item>();
-		bucket.add(new Item("apple", 5));
-		bucket.add(new Item("apple", 5));
-		bucket.add(new Item("apple", 5));
-		bucket.add(new Item("apple", 5));
-		bucket.add(new Item("apple", 5));
-		bucket.add(new Item("apple", 5));
-
-		RuleResult ruleResult = rule.process(bucket);
-
-		assertNotNull(ruleResult);
-		assertEquals(20, ruleResult.getAmount(), 0);
-		assertEquals(6, ruleResult.getDiscountedItems().size());
-		for (Item discountedItem : ruleResult.getDiscountedItems()) {
-			assertEquals("apple", discountedItem.getItemCode());
-			assertEquals(5, discountedItem.getPrice(), 0);
-		}
+		assertEquals(1.1, ruleResult.getAmount(), 0);
+		assertEquals(2, ruleResult.getDiscountedItems().size());
 
 	}
+
 }
