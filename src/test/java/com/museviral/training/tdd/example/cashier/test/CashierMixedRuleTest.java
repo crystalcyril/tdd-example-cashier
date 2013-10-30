@@ -42,7 +42,7 @@ public class CashierMixedRuleTest extends AbstractCashierTest {
 		this.initStandardPriceList();
 
 		// buy 2 apple, get 1 apple free
-		cashier.addRule(new BuyNGetMFree("apple", 2, 1));
+		cashier.addRule(new BuyNGetMFree(2, "apple", 1));
 		cashier.addRule(new BuyNPayFixedAmount(3, "orange", 6));
 
 		// now go shopping.
@@ -69,7 +69,7 @@ public class CashierMixedRuleTest extends AbstractCashierTest {
 		this.initStandardPriceList();
 
 		// buy 2 apple, get 1 apple free
-		cashier.addRule(new BuyNGetMFree("apple", 4, 2));
+		cashier.addRule(new BuyNGetMFree(4, "apple", 2));
 		cashier.addRule(new BuyNPayFixedAmount(2, "apple", 7));
 
 		// now go shopping. buy 5. Only the "BuyNPayFixedAmount" rule
@@ -99,7 +99,7 @@ public class CashierMixedRuleTest extends AbstractCashierTest {
 		// 1. buy 2 apple, get 1 apple free. Discount: $15 -> $10, saved $5.
 		// 2. buy 3 apple, pay $11. Discount: $15 -> $11, saved $4.
 		// therefore, cashier should choose rule 1.
-		cashier.addRule(new BuyNGetMFree("apple", 2, 1));
+		cashier.addRule(new BuyNGetMFree(2, "apple", 1));
 		cashier.addRule(new BuyNPayFixedAmount(3, "apple", 11));
 
 		// now go shopping. buy 5. Only the "BuyNPayFixedAmount" rule
@@ -128,7 +128,37 @@ public class CashierMixedRuleTest extends AbstractCashierTest {
 		// 1. buy 2 apple, get 1 apple free. Discount: $15 -> $10, saved $5.
 		// 2. buy 3 apple, pay $11. Discount: $15 -> $9, saved $6.
 		// therefore, cashier should choose rule 2.
-		cashier.addRule(new BuyNGetMFree("apple", 2, 1));
+		cashier.addRule(new BuyNGetMFree(2, "apple", 1));
+		cashier.addRule(new BuyNPayFixedAmount(3, "apple", 9));
+
+		// now go shopping. buy 5. Only the "BuyNPayFixedAmount" rule
+		// will be effective
+		cashier.addItem("apple");
+		cashier.addItem("apple");
+		cashier.addItem("apple");
+
+		assertCashierShouldHaveNItems(3);
+
+		assertCheckoutAmountIs(9);
+
+	}
+	
+	
+	/**
+	 * This is the variant of
+	 * {@link #testCashierDetermineTheBestRuleOnSameItems_1()}, which in this
+	 * test case, we change rule #2 to pay $9 instead of $11.
+	 */
+	@Test
+	public void testCashierDetermineTheBestRuleWithManyItems() {
+
+		this.initStandardPriceList();
+
+		// two rules:
+		// 1. buy 2 apple, get 1 apple free. Discount: $15 -> $10, saved $5.
+		// 2. buy 3 apple, pay $11. Discount: $15 -> $9, saved $6.
+		// therefore, cashier should choose rule 2.
+		cashier.addRule(new BuyNGetMFree(2, "apple", 1));
 		cashier.addRule(new BuyNPayFixedAmount(3, "apple", 9));
 
 		// now go shopping. buy 5. Only the "BuyNPayFixedAmount" rule

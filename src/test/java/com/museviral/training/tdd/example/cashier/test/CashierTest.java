@@ -97,7 +97,7 @@ public class CashierTest {
 
 		// set rules
 
-		assertTrue(cashier.addRule(new BuyNGetMFree("apple", 2, 1)));
+		assertTrue(cashier.addRule(new BuyNGetMFree(2, "apple", 1)));
 
 		cashier.addItem("apple");
 		cashier.addItem("apple");
@@ -116,7 +116,7 @@ public class CashierTest {
 
 		// set rules
 
-		assertTrue(cashier.addRule(new BuyNGetMFree("apple", 2, 1)));
+		assertTrue(cashier.addRule(new BuyNGetMFree(2, "apple", 1)));
 
 		cashier.addItem("apple");
 		cashier.addItem("apple");
@@ -138,7 +138,7 @@ public class CashierTest {
 
 		// set rules
 
-		assertTrue(cashier.addRule(new BuyNGetMFree("apple", 2, 1)));
+		assertTrue(cashier.addRule(new BuyNGetMFree(2, "apple", 1)));
 
 		cashier.addItem("apple");
 		cashier.addItem("apple");
@@ -158,7 +158,7 @@ public class CashierTest {
 
 		// set rules
 
-		assertTrue(cashier.addRule(new BuyNGetMFree("apple", 1, 2)));
+		assertTrue(cashier.addRule(new BuyNGetMFree(1, "apple", 2)));
 
 		cashier.addItem("apple");
 		cashier.addItem("apple");
@@ -177,7 +177,7 @@ public class CashierTest {
 
 		// set rules
 
-		assertTrue(cashier.addRule(new BuyNGetMFree("apple", 3, 2)));
+		assertTrue(cashier.addRule(new BuyNGetMFree(3, "apple", 2)));
 
 		cashier.addItem("apple");
 		cashier.addItem("apple");

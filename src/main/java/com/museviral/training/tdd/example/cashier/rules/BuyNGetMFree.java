@@ -36,7 +36,7 @@ public class BuyNGetMFree implements Rule {
 		this.freeQty = freeQty;
 	}
 	
-	public BuyNGetMFree(String purchaseItemCode, int requireBuyingQty,
+	public BuyNGetMFree(int requireBuyingQty, String purchaseItemCode,
 			int freeQty) {
 		this(purchaseItemCode, requireBuyingQty, purchaseItemCode, freeQty);
 	}

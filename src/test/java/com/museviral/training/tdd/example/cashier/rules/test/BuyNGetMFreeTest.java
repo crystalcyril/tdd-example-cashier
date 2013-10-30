@@ -41,7 +41,7 @@ public class BuyNGetMFreeTest {
 	@Test
 	public void testNoItem() {
 
-		BuyNGetMFree rule = new BuyNGetMFree("apple", 2, 1);
+		BuyNGetMFree rule = new BuyNGetMFree(2, "apple", 1);
 
 		List<Item> bucket = new ArrayList<Item>();
 		RuleResult ruleResult = rule.process(bucket);
@@ -55,7 +55,7 @@ public class BuyNGetMFreeTest {
 	@Test
 	public void testOneItem() {
 
-		BuyNGetMFree rule = new BuyNGetMFree("apple", 2, 1);
+		BuyNGetMFree rule = new BuyNGetMFree(2, "apple", 1);
 
 		List<Item> bucket = new ArrayList<Item>();
 		bucket.add(new Item("apple", 5));
@@ -71,7 +71,7 @@ public class BuyNGetMFreeTest {
 	@Test
 	public void testTwoItem() {
 
-		BuyNGetMFree rule = new BuyNGetMFree("apple", 2, 1);
+		BuyNGetMFree rule = new BuyNGetMFree(2, "apple", 1);
 
 		List<Item> bucket = new ArrayList<Item>();
 		bucket.add(new Item("apple", 5));
@@ -88,7 +88,7 @@ public class BuyNGetMFreeTest {
 	@Test
 	public void testOneSetOfItemsMatched() {
 
-		BuyNGetMFree rule = new BuyNGetMFree("apple", 2, 1);
+		BuyNGetMFree rule = new BuyNGetMFree(2, "apple", 1);
 
 		List<Item> bucket = new ArrayList<Item>();
 		bucket.add(new Item("apple", 5));
@@ -110,7 +110,7 @@ public class BuyNGetMFreeTest {
 	@Test
 	public void testOneSetOfItemsMatchedWithRemaining() {
 
-		BuyNGetMFree rule = new BuyNGetMFree("apple", 2, 1);
+		BuyNGetMFree rule = new BuyNGetMFree(2, "apple", 1);
 
 		List<Item> bucket = new ArrayList<Item>();
 		bucket.add(new Item("apple", 5));
@@ -133,7 +133,7 @@ public class BuyNGetMFreeTest {
 	@Test
 	public void testTwoSetOfItemsMatched() {
 
-		BuyNGetMFree rule = new BuyNGetMFree("apple", 2, 1);
+		BuyNGetMFree rule = new BuyNGetMFree(2, "apple", 1);
 
 		List<Item> bucket = new ArrayList<Item>();
 		bucket.add(new Item("apple", 5));
